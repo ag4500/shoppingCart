@@ -1,12 +1,14 @@
 import { Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
 const GetHistory = () => {
-  const usersDataString = localStorage.getItem("historydata");
-  const users = JSON.parse(usersDataString);
+  const data=useSelector((state)=>state.login)
+  const productsDataString = localStorage.getItem("historydata");
+  const products = JSON.parse(productsDataString);
 
-  return (
+  return data.loggedIn ?(
     <>
-      <div className="container table-responsive">
-        <h4>User History</h4>
+      <div className="container ">
+        <h4>Product History</h4>
         <Table striped bordered hover size="lg">
           <thead>
             <tr>
@@ -16,8 +18,8 @@ const GetHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {users
-              ? users.map((data) => (
+            {products
+              ? products.map((data) => (
                   <tr key={data.id}>
                     <td>
                       {data.product.map((i) => (
@@ -37,6 +39,6 @@ const GetHistory = () => {
         </Table>
       </div>
     </>
-  );
+  ):<span className="mx-3 container">Please LogIn to use History</span>;
 };
 export default GetHistory;
