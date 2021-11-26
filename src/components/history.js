@@ -1,46 +1,42 @@
-import React from "react";
-import { ListGroup } from "react-bootstrap";
-import { connect } from "react-redux";
-class history extends React.Component {
-  render() {
-    const jsondata = JSON.parse(localStorage.getItem("history"));
-    const jsondate = JSON.parse(localStorage.getItem("date"));
-    const data = jsondata.data;
-    const total = jsondata.total;
-    const history = data.map((data) => {
-      return (
-        <ul key={data.id}>
-          {
-            <li style={{ listStyleType: "square" }}>
-              <ListGroup>
-                <ListGroup.Item>
-                  {data.title} {data.price} {data.quantity}
-                </ListGroup.Item>
-              </ListGroup>
-            </li>
-          }
-        </ul>
-      );
-    });
-    return this.props.login.loggedIn ? (
-      <>
-        <div className="container my-3">
-          <h3 className="text-center my-2 text-danger">History...</h3>
-          {history}{"  "}
-          {total}
-          {"  "}
-          {jsondate}
-        </div>
-      </>
-    ) : (
-      <h4 className="my-3 container text-center">
-        Please Logged In to use history
-      </h4>
-    );
-  }
-}
-const mapStateToProps = (state) => ({
-  login: state.login,
-});
-const usersConnectedWithRedux = connect(mapStateToProps)(history);
-export default usersConnectedWithRedux;
+import { Table } from "react-bootstrap";
+const GetHistory = () => {
+  const usersDataString = localStorage.getItem("historydata");
+  const users = JSON.parse(usersDataString);
+
+  return (
+    <>
+      <div className="container table-responsive">
+        <h4>User History</h4>
+        <Table striped bordered hover size="lg">
+          <thead>
+            <tr>
+              <th>Products</th>
+              <th>Total</th>
+              <th>CheckOut DateTime</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users
+              ? users.map((data) => (
+                  <tr key={data.id}>
+                    <td>
+                      {data.product.map((i) => (
+                        <>
+                          <td>"Name" : {i.title},</td>
+                          <td>"Price" :{i.price},</td>
+                          <td>"Quantity" {i.quantity}</td>
+                        </>
+                      ))}
+                    </td>
+                    <td>{data.date}</td>
+                    <td>{data.total}</td>
+                  </tr>
+                ))
+              : "No History Available"}
+          </tbody>
+        </Table>
+      </div>
+    </>
+  );
+};
+export default GetHistory;

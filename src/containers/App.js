@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import ProductsContainer from "./ProductsContainer";
 import CartContainer from "./CartContainer";
-import history from '../components/history'
+import GetHistory  from '../components/history'
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, Container } from "react-bootstrap";
 const App = () => (
@@ -30,12 +30,11 @@ const App = () => (
       <Switch>
         <Route exact path="/products" component={ProductsContainer} />
         <Route exact path="/cart" component={CartContainer} />
-        <Route exact path="/history" component={history} />
+        <Route exact path="/history" component={GetHistory } />
       </Switch>
     </Router>
 
-    {/* <ProductsContainer/>
-    <CartContainer/>*/}
+
   </>
 );
 

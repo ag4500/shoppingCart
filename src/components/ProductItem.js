@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Product from "./Product";
 import { Button } from "react-bootstrap";
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+
 const ProductItem = ({ product, onAddToCartClicked }) => {
   return (
     <>

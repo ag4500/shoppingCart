@@ -9,7 +9,7 @@ const CartContainer = ({ products, total, checkout, logged }) => (
   <Cart
     products={products}
     total={total}
-    onCheckoutClicked={() => checkout(products)}
+    onCheckoutClicked={() => checkout(products,total)}
     logged={logged}
   />
 );

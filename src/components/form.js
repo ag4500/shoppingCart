@@ -53,7 +53,7 @@ const LogIn = () => {
               <InputGroup className="p-2 -3 ">
                 <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
                 <FormControl
-                  type="text"
+                  type="password"
                   name="password"
                   value={password}
                   onChange={(event) => onChange(event)}

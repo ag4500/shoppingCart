@@ -1,22 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Product from "./Product";
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+
 const Cart = ({ products, total, onCheckoutClicked, logged }) => {
   const hasProducts = products.length > 0;
-  let historys = useHistory();
-  const date = new Date().toLocaleString();
-  useEffect(() => {
-    historys.push({
-      state: { data: products, total: total, date: date },
-    });
-    if (!localStorage.getItem("history")) {
-      localStorage.setItem("history", JSON.stringify(historys.location.state));
-    } else {
-      return []
-    }
-  }, []);
+  
   const nodes = hasProducts ? (
     products.map((product) => (
       <Product
@@ -29,7 +17,7 @@ const Cart = ({ products, total, onCheckoutClicked, logged }) => {
   ) : (
     <em>Please add some products to cart.</em>
   );
-  return logged.loggedIn ? (
+  return (
     <div>
       <h3>Your Cart</h3>
       <div>{nodes}</div>
@@ -41,11 +29,7 @@ const Cart = ({ products, total, onCheckoutClicked, logged }) => {
         Checkout
       </button>
     </div>
-  ) : (
-    <h4 className="my-3 container text-center">
-      Please Logged In to use checkout
-    </h4>
-  );
+  ) 
 };
 Cart.propTypes = {
   products: PropTypes.array,
