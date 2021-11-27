@@ -13,7 +13,7 @@ const GetHistory = () => {
           <thead>
             <tr>
               <th>S.No.</th>
-              <th>Products</th>
+              <th>Products Detail</th>
               <th>Total</th>
               <th>CheckOut DateTime</th>
             </tr>
