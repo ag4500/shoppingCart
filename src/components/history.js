@@ -1,17 +1,18 @@
 import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 const GetHistory = () => {
-  const data=useSelector((state)=>state.login)
+  const islogin = useSelector((state) => state.login);
   const productsDataString = localStorage.getItem("historydata");
   const products = JSON.parse(productsDataString);
 
-  return data.loggedIn ?(
+  return islogin.loggedIn ? (
     <>
       <div className="container ">
-        <h4>Product History</h4>
+        <h4 className="text-center my-4">Product History</h4>
         <Table striped bordered hover size="lg">
           <thead>
             <tr>
+              <th>S.No.</th>
               <th>Products</th>
               <th>Total</th>
               <th>CheckOut DateTime</th>
@@ -19,19 +20,31 @@ const GetHistory = () => {
           </thead>
           <tbody>
             {products
-              ? products.map((data) => (
+              ? products.map((data, index) => (
                   <tr key={data.id}>
+                    <td>{index + 1}</td>
                     <td>
-                      {data.product.map((i) => (
-                        <>
-                          <td>"Name" : {i.title},</td>
-                          <td>"Price" :{i.price},</td>
-                          <td>"Quantity" {i.quantity}</td>
-                        </>
-                      ))}
+                      <Table striped bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data.product.map((i) => (
+                            <tr>
+                              <td>{i.title}</td>
+                              <td>{i.quantity}</td>
+                              <td>{i.price}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
                     </td>
-                    <td>{data.date}</td>
                     <td>{data.total}</td>
+                    <td>{data.date}</td>
                   </tr>
                 ))
               : "No History Available"}
@@ -39,6 +52,8 @@ const GetHistory = () => {
         </Table>
       </div>
     </>
-  ):<span className="mx-3 container">Please LogIn to use History</span>;
+  ) : (
+    <span className="mx-3 container">Please LogIn to use History</span>
+  );
 };
 export default GetHistory;

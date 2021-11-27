@@ -21,30 +21,28 @@ export const addToCart = (productId) => (dispatch, getState) => {
 export const checkout = (products, total) => (dispatch, getState) => {
   const { cart } = getState();
   const { login } = getState();
-  login.loggedIn
-    ? dispatch({
-        type: types.CHECKOUT_REQUEST,
-      })
-    : console.log("please LogIn");
-  login.loggedIn
-    ? shop.buyProducts(products, () => {
-        dispatch({
-          type: types.CHECKOUT_SUCCESS,
-          cart,
-        });
-        let productData = {
-          product: products,
-          date: new Date().toLocaleString(),
-          total: total,
-        };
-        let getdata = localStorage.getItem("historydata") || "[]";
-        let parsedata = JSON.parse(getdata);
-        localStorage.setItem(
-          "historydata",
-          JSON.stringify(parsedata.concat(productData))
-        );
-      })
-    : alert("Please Login with valid username and password");
+  if (login.loggedIn) {
+    dispatch({ type: types.CHECKOUT_REQUEST });
+    shop.buyProducts(products, () => {
+      dispatch({
+        type: types.CHECKOUT_SUCCESS,
+        cart,
+      });
+      let productData = {
+        product: products,
+        date: new Date().toLocaleString(),
+        total: total,
+      };
+      let getdata = localStorage.getItem("historydata") || "[]";
+      let parsedata = JSON.parse(getdata);
+      localStorage.setItem(
+        "historydata",
+        JSON.stringify(parsedata.concat(productData))
+      );
+    });
+  } else {
+    alert("Please Login with valid username and password");
+  }
 };
 export const showHide = (payload) => ({
   type: types.ShowHide,
